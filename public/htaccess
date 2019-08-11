@@ -1,0 +1,46 @@
+
+RewriteEngine on
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteCond %{REQUEST_URI} !^/[0-9]+\..+\.cpaneldcv$
+RewriteCond %{REQUEST_URI} !^/\.well-known/acme-challenge/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !^/[0-9]+\..+\.cpaneldcv$
+RewriteCond %{REQUEST_URI} !^/\.well-known/acme-challenge/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+RewriteRule . /index.php [L]
+</IfModule>
+# END WordPress
+RewriteCond %{HTTP_HOST} ^getfreestuffs\.xyz$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.getfreestuffs\.xyz$
+RewriteCond %{REQUEST_URI} !^/[0-9]+\..+\.cpaneldcv$
+RewriteCond %{REQUEST_URI} !^/\.well-known/acme-challenge/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+RewriteRule ^index\.php$ "http\:\/\/getfreestuffs\.xyz\/" [R=301,L]
+
+<IfModule mod_deflate.c>
+  SetOutputFilter DEFLATE
+  SetEnvIfNoCase Request_URI \
+  \.(?:gif|jpe?g|png)$ no-gzip dont-vary
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive on
+  ExpiresByType image/jpg "access 2 month"
+  ExpiresByType image/gif "access 2 month"
+  ExpiresByType image/jpeg "access 2 month"
+  ExpiresByType image/png "access 2 month"
+  ExpiresByType text/css "access 2 month"
+  ExpiresByType application/x-javascript "access plus 2 month"
+  ExpiresByType text/javascript "access plus 2 month"
+  ExpiresByType application/javascript "access plus 2 month"
+  ExpiresByType image/x-icon "access plus 12 month"
+  ExpiresByType image/icon "access plus 12 month"
+  ExpiresByType application/x-ico "access plus 12 month"
+  ExpiresByType application/ico "access plus 12 month"
+</IfModule>
